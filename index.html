@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <title>Encriptador de texto</title>
+        <link rel="stylesheet" href="reset.css">
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+
+        <header>
+            <h1><img src="images/Vector.png" id="logo" alt="Logo del encriptador de texto"></h1>
+        </header>
+
+        <main>
+            <div class="texto">
+                <textarea cols="70" rows="20" id="texto" placeholder="Ingrese el texto aquí" autofocus></textarea>
+            </div>
+
+            
+            <div class="rectangulo">
+                <img src="images/Muñeco.png" id="muñeco">
+                <div class="cajon">
+                    <input type="text" id="principal" value="Ningún mensaje fue encontrado" disabled>
+                    <input type="text" id="secundario" value="Ingresa el texto que desees encriptar o desencriptar" disabled>
+                </div>
+                <button type="button" onclick="copiarTexto()" class="copiar" id="boton-copiar"><p id="copiar">Copiar</p></button>
+                <textarea cols="70" rows="20" id="texto-encriptado" disabled></textarea>
+            </div>
+            
+            <div class="advertencia">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#495057" class="exclamacion" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                </svg>
+                <p id="mensaje">Solo letras minúsculas y sin acentos</p>
+            </div>
+
+            <div class="botones">
+                <button type="button" onclick="encriptarTexto()" class="encriptar"><p id="encriptar">Encriptar</p></button>
+                <button type="button" onclick="desencriptarTexto()" class="desencriptar"><p id="desencriptar">Desencriptar</p></button>
+            </div>
+        </main>
+
+        <script>
+
+            function encriptarTexto(){
+
+                document.getElementById("principal").style.visibility="hidden";
+                document.getElementById("secundario").style.visibility="hidden";
+                document.getElementById("muñeco").style.visibility="hidden";
+                document.getElementById("boton-copiar").style.visibility="visible";       
+                document.getElementById("texto-encriptado").style.visibility="visible";  
+
+                var input = document.getElementById("texto").value;
+            
+                const chars = {'a':'ai','e':'enter','i':'imes','o':'ober','u':'ufat'};
+                input = input.replace(/[aeiou]/g, m => chars[m]);                
+                document.getElementById("texto-encriptado").value = input;
+    
+                formatoCajaTexto();
+                  
+            }
+
+            function desencriptarTexto(){
+                document.getElementById("principal").style.visibility="hidden";
+                document.getElementById("secundario").style.visibility="hidden";
+                document.getElementById("muñeco").style.visibility="hidden";
+                document.getElementById("boton-copiar").style.visibility="visible";
+
+                var input = document.getElementById("texto").value;
+                const chars = {'ai':'a','enter':'e','imes':'i','ober':'o','ufat':'u'};
+
+                input = input.replace(/ai|enter|imes|ober|ufat/g, m => chars[m]);
+                document.getElementById("texto-encriptado").value = input;
+
+                formatoCajaTexto();
+            }
+
+            function formatoCajaTexto(){
+                document.getElementById("texto").value="";
+                document.getElementById("texto").placeholder = "Ingrese el texto aquí";
+                document.getElementById("texto").autofocus;
+            }
+
+            function copiarTexto(){
+                var copyText = document.getElementById("texto-encriptado");
+                copyText.select();
+                navigator.clipboard.writeText(copyText.value);
+            }   
+            
+
+        </script>
+
+    </body>
+
+
+
+
+
+</html>
